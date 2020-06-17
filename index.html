@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS BEGIN {{{ -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <!-- Bootstrap CSS END   }}} -->
+  <link rel="stylesheet" type="text/css" href="./style.css">
+
+  <title>Javascript Quiz</title>
+</head>
+<body>
+  <h1>Javascript Quiz</h1>
+
+  <main class="container">
+
+    <div class="row">
+      <div class="col-sm-6">
+        <button type="button" class="btn bg-secondary" data-toggle="modal" data-target="#question">
+        Start Quiz
+        </button>
+      </div>
+      <div class="col-sm-6">
+        <button type="button" class="btn bg-secondary" data-toggle="modal" data-target="#highScore">
+        High Scores
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal window to ask multiple choice questions -->
+    <div id="question" class="modal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h4 class="modal-title">
+            Java script question
+            </h4>
+          </div>
+
+          <div class="modal-body">
+            <div id="textQuestion">
+            </div>
+
+            <div id="answer">
+            <input type="submit"> </input>
+            </div>
+
+            <div class="buttons">
+              <button aria-label="A" id="answerA">A</button>
+              <div id="textA">
+              </div>
+              <br>
+
+              <button aria-label="B" id="answerB">B</button>
+              <div id="textB">
+              </div>
+              <br>
+
+              <button aria-label="C" id="answerC">C</button>
+              <div id="textC">
+              </div>
+              <br>
+
+              <button aria-label="D" id="answerD">D</button>
+              <div id="textD">
+              </div>
+              <br>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn bg-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal window to display high score list -->
+    <div id="highScore" class="modal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h4 class="modal-title">
+            High Scores on Quiz
+            </h4>
+          </div>
+
+          <div class="modal-body">
+            <div id="scoreList">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn bg-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bootstrap Javascript BEGIN {{{ -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <!-- Bootstrap Javascript END   }}} -->
+  <!-- Local JavaScript -->
+  <script src="./script.js"></script>
+</body>
+</html> <!-- vim: set sw=2 ai lbr tw=0 fdm=marker fdl=0 : -->
