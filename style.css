@@ -23,3 +23,25 @@ input {
   width: 100%;
 }
 
+.displayTimeLeft {
+  width: 100%;
+  text-align: center;
+}
+
+.displayTimeLeft::after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+
+#minutesLeft {
+  font-size: 4em;
+  float: left;
+  margin-left: 25%;
+}
+
+#secondsLeft {
+  font-size: 2em;
+  float: left;
+}
+
