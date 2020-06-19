@@ -6,7 +6,9 @@ var highScoreButton = document.querySelector("#highScore");
 var minDisplay = document.querySelector("#minutesLeft");
 var secDisplay = document.querySelector("#secondsLeft");
 var scoreDisplay = document.querySelector("#curScore");
+var statusDisplay = document.querySelector("#answerStatus");
 var questionDiv = document.querySelector("#textQuestion");
+var questionNum = document.querySelector("#questionNum");
 var answerInput = document.querySelector("#answerInput");
 
 var choiceButtons= document.querySelector(".buttons");
@@ -19,6 +21,7 @@ const quizPeriodMinutes = 5;
 const quizPeriodSeconds = 0;
 var quizQuestion = 0;
 var quizScore = 0;
+var answerCorrect = "";
 
 // Status variables
 var totalSeconds = 0;
@@ -90,12 +93,15 @@ var questionList = [
 ];
 
 function showQuestion(i) {
+  answerInput.value = "";
+  answerCorrect =  "";
+  questionNum.textContent = "Question: "+(i+1);
   if (i < questionList.length) {
-    questionDiv.textContent = ' '+questionList[i].askText;
-    choiceAText.textContent = ' '+questionList[i].choiceA;
-    choiceBText.textContent = ' '+questionList[i].choiceB;
-    choiceCText.textContent = ' '+questionList[i].choiceC;
-    choiceDText.textContent = ' '+questionList[i].choiceD;
+    questionDiv.textContent = " "+questionList[i].askText;
+    choiceAText.textContent = " "+questionList[i].choiceA;
+    choiceBText.textContent = " "+questionList[i].choiceB;
+    choiceCText.textContent = " "+questionList[i].choiceC;
+    choiceDText.textContent = " "+questionList[i].choiceD;
   } else {
     stopTimer();
   }
@@ -103,17 +109,23 @@ function showQuestion(i) {
 
 function answerQuestion(i,letter) {
   var answer = letter.toUpperCase();
-  if (answer == questionList[i].correct) {
+  var correct = questionList[i].correct
+  if (answer == correct) {
     quizScore++;
+    answerCorrect = "Correct!"
     renderTimeAndScore(0);
   } else {
     // Run off 5 seconds as penalty!
+    answerCorrect = "No, answer was: "+correct
     renderTimeAndScore(5);
   }
-  showQuestion(++quizQuestion);
+  // Wait for 3 seconds so last answer status can be seen then show next
+  // question.
+  setTimeout(showQuestion(++quizQuestion),3000);
 }
 
-// These two functions are just for making sure the numbers look nice for the html elements
+// These two functions are just for making sure the numbers look nice for the
+// html elements.
 function getRemainingMinutes() {
   //
   var secondsLeft = totalSeconds - secondsElapsed;
@@ -145,6 +157,7 @@ function renderTimeAndScore(runOffTime) {
   secDisplay.textContent = getRemainingSeconds();
   // Show current score as well
   scoreDisplay.textContent = quizScore;
+  statusDisplay.textContent = answerCorrect;
 
   // and then checks to see if the time has run out
   if (secondsElapsed >= totalSeconds) {
@@ -178,11 +191,29 @@ function stopTimer() {
 }
 
 
+// Start button begins the timed quiz by starting the timer and showing the
+// first question.
 startButton.addEventListener("click", startTimer);
+
+// Event delegation allows all four answer buttons to be hooked to the same
+// listen with a per button data-letter attribute referenced to get the user's
+// answer. 
 choiceButtons.addEventListener("click", function(event) {
   event.preventDefault();
   event.stopPropagation();
   if (event.target.matches("button")) {
+    answerInput.value = event.target.dataset.letter;
     answerQuestion(quizQuestion,event.target.dataset.letter);
+  }
+});
+
+// Keypress event should be at whole document scope so a key stroke can be used
+// to answer without bring focus to a specific control.
+document.addEventListener("keypress", function(event) { 
+  var rxDigit = /[A-Da-d]/;
+  event.preventDefault();
+  answerInput.value = event.key;
+  if (rxDigit.test(event.key)) {
+    answerQuestion(quizQuestion,event.key);
   }
 });

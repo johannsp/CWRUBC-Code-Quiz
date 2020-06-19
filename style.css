@@ -13,6 +13,11 @@ h1 {
   font-size: 3.5em;
 }
 
+h5 {
+  display: inline-block;
+  font-size: 1.5em;
+}
+
 input {
   border: 1px solid black;
   /**XXXXX** BEGIN Rem out **XXXXX**
