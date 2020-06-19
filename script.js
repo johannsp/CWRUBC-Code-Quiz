@@ -95,28 +95,29 @@ var questionList = [
 function showQuestion(i) {
   answerInput.value = "";
   answerCorrect =  "";
-  questionNum.textContent = "Question: "+(i+1);
   if (i < questionList.length) {
+    questionNum.textContent = "Question: "+(i+1);
     questionDiv.textContent = " "+questionList[i].askText;
     choiceAText.textContent = " "+questionList[i].choiceA;
     choiceBText.textContent = " "+questionList[i].choiceB;
     choiceCText.textContent = " "+questionList[i].choiceC;
     choiceDText.textContent = " "+questionList[i].choiceD;
   } else {
+    questionNum.textContent = "Question: ";
     stopTimer();
   }
 }
 
 function answerQuestion(i,letter) {
   var answer = letter.toUpperCase();
-  var correct = questionList[i].correct
+  var correct = questionList[i].correct;
   if (answer == correct) {
     quizScore++;
-    answerCorrect = "Correct!"
+    answerCorrect = "Correct!";
     renderTimeAndScore(0);
   } else {
     // Run off 5 seconds as penalty!
-    answerCorrect = "No, answer was: "+correct
+    answerCorrect = "No, answer was: "+correct;
     renderTimeAndScore(5);
   }
   // Wait for 3 seconds so last answer status can be seen then show next
@@ -140,15 +141,14 @@ function getRemainingSeconds() {
   return ": "+((secondsLeft < 10) ? "0" : "") + secondsLeft;
 }
 
-/* This function ensures the timer is reset and readies the quiz timer by
- * initializing totalSeconds
- */
+// This function ensures the timer is reset and readies the quiz timer by
+// initializing totalSeconds.
 function readyStartingTime() {
   clearInterval(interval);
   totalSeconds = (quizPeriodMinutes * 60) + quizPeriodSeconds;
 }
 
-// This function does 2 things. displays the time and checks to see if time is up.
+// This function renders the time and other quiz status information.
 function renderTimeAndScore(runOffTime) {
   // Run off extra time as needed
   // when a missed guess penalty applies
@@ -181,9 +181,9 @@ function startTimer() {
   }, 1000);
 }
 
-/* This function stops the interval and also resets secondsElapsed
-   and calls "setTime()" which effectively reset the timer
-   to the input selections workMinutesInput.value and restMinutesInput.value */
+// This function stops the interval and also resets secondsElapsed
+// and calls "setTime()" which effectively reset the timer
+// to the input selections workMinutesInput.value and restMinutesInput.value
 function stopTimer() {
   secondsElapsed = 0;
   readyStartingTime();
