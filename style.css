@@ -14,12 +14,15 @@ h1 {
 }
 
 input {
-  border: 5px solid green;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  font-size: 2em;
-  color: green;
+  border: 1px solid black;
+  /**XXXXX** BEGIN Rem out **XXXXX**
+  ***X border-top: none;
+  ***X border-left: none;
+  ***X border-right: none;
+  ***XXXXX**  END  Rem out **XXXXX**/
+  margin-bottom: 10px;
+  font-size: 1em;
+  color: black;
   width: 100%;
 }
 
@@ -34,14 +37,18 @@ input {
   clear: both;
 }
 
+.question {
+  margin: 0rem;
+  padding: 0rem;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
 #minutesLeft {
   font-size: 4em;
-  float: left;
-  margin-left: 25%;
 }
 
 #secondsLeft {
   font-size: 2em;
-  float: left;
 }
 

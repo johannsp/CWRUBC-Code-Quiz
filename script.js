@@ -5,16 +5,20 @@ var highScoreButton = document.querySelector("#highScore");
 // In question modal
 var minDisplay = document.querySelector("#minutesLeft");
 var secDisplay = document.querySelector("#secondsLeft");
+var scoreDisplay = document.querySelector("#curScore");
 var questionDiv = document.querySelector("#textQuestion");
 var answerInput = document.querySelector("#answerInput");
-var answerAButton = document.querySelector("#answerA"); 
-var answerAText = document.querySelector("#textA"); 
-var answerBButton = document.querySelector("#answerB"); 
-var answerBText = document.querySelector("#textB"); 
-var answerCButton = document.querySelector("#answerC"); 
-var answerCText = document.querySelector("#textC"); 
-var answerDButton = document.querySelector("#answerD"); 
-var answerDText = document.querySelector("#textD"); 
+
+var choiceButtons= document.querySelector(".buttons");
+var choiceAText = document.querySelector("#textA"); 
+var choiceBText = document.querySelector("#textB"); 
+var choiceCText = document.querySelector("#textC"); 
+var choiceDText = document.querySelector("#textD"); 
+
+const quizPeriodMinutes = 5;
+const quizPeriodSeconds = 0;
+var quizQuestion = 0;
+var quizScore = 0;
 
 // Status variables
 var totalSeconds = 0;
@@ -22,27 +26,163 @@ var secondsElapsed = 0;
 
 var interval;
 
-var questionList [
+var questionList = [
   {askText: "Javascript expression '1' + 1 will evaluate to:",
-  answerA: "11",
-  answerB: "2",
-  answerC: "undefined",
-  answerD: "NaN",
+  choiceA: "11",
+  choiceB: "2",
+  choiceC: "undefined",
+  choiceD: "NaN",
   correct: "A"},
-  {askText: "",
-  answerA: "",
-  answerB: "",
-  answerC: "",
-  answerD: "",
-  correct: ""},
+  {askText: "('1' == 1) evaluates to:",
+  choiceA: "true",
+  choiceB: "false",
+  choiceC: "undefined",
+  choiceD: "NaN",
+  correct: "A"},
+  {askText: "('1' === 1) evaluates to:",
+  choiceA: "true",
+  choiceB: "false",
+  choiceC: "undefined",
+  choiceD: "NaN",
+  correct: "B"},
+  {askText: "The correct syntax for an object method to access an object property x is:",
+  choiceA: "object.x",
+  choiceB: "my.x",
+  choiceC: "self.x",
+  choiceD: "this.x",
+  correct: "D"},
+  {askText: "A Javascript closure is:",
+  choiceA: "An anonymous function, a function with no function name",
+  choiceB: "A short cut notation that uses => to create an anonymous function",
+  choiceC: "A method for guaranteeing a recursive function closes down without errors",
+  choiceD: "A technique to force function scope variables to be preserved for further use",
+  correct: "D"},
+  {askText: "Math.floor(Math.random * 10) gives a random number between:",
+  choiceA: "0 and 9",
+  choiceB: "0 and 10",
+  choiceC: "1 and 10",
+  choiceD: "1 and 11",
+  correct: "A"},
+  {askText: "for (var i = 0; i < 11; i += 2) { alert(i); } will show alerts for:",
+  choiceA: "0 1 2 3 4 5 6 7 8 9 10",
+  choiceB: "0 1 2 3 4 5 6 7 8 9 10 11",
+  choiceC: "0 2 4 6 8 10",
+  choiceD: "1 3 5 7 9 11",
+  correct: "C"},
+  {askText: "(NaN == NaN) evaluates to:",
+  choiceA: "true",
+  choiceB: "false",
+  choiceC: "undefined",
+  choiceD: "NaN",
+  correct: "B"},
+  {askText: "Can an object call a method that belongs to another object?",
+  choiceA: "No, never.",
+  choiceB: ".call can be used if the other object has the needed properties",
+  choiceC: ".apply can be used if the other object has the needed properties",
+  choiceD: "both .call and .apply could be used for this purpose",
+  correct: "D"},
+  {askText: "Math.max.apply(null, [1, 2, 3, 5, 0] will evaluate to:",
+  choiceA: "undefined",
+  choiceB: "null",
+  choiceC: "0",
+  choiceD: "5",
+  correct: "D"}
 ];
 
 function showQuestion(i) {
-  questionDiv.textContent = ' '+questionList[i].askText;
-  answerAText.textContent = ' '+questionList[i].answerA;
-  answerBText.textContent = ' '+questionList[i].answerB;
-  answerCText.textContent = ' '+questionList[i].answerC;
-  answerDText.textContent = ' '+questionList[i].answerD;
-  
+  if (i < questionList.length) {
+    questionDiv.textContent = ' '+questionList[i].askText;
+    choiceAText.textContent = ' '+questionList[i].choiceA;
+    choiceBText.textContent = ' '+questionList[i].choiceB;
+    choiceCText.textContent = ' '+questionList[i].choiceC;
+    choiceDText.textContent = ' '+questionList[i].choiceD;
+  } else {
+    stopTimer();
+  }
 }
-//startButton.addEventListener("click", startTimer);
+
+function answerQuestion(i,letter) {
+  var answer = letter.toUpperCase();
+  if (answer == questionList[i].correct) {
+    quizScore++;
+    renderTimeAndScore(0);
+  } else {
+    // Run off 5 seconds as penalty!
+    renderTimeAndScore(5);
+  }
+  showQuestion(++quizQuestion);
+}
+
+// These two functions are just for making sure the numbers look nice for the html elements
+function getRemainingMinutes() {
+  //
+  var secondsLeft = totalSeconds - secondsElapsed;
+  var minutesLeft = Math.floor(secondsLeft / 60);
+
+  return ((minutesLeft < 10) ? "0" : "") + minutesLeft;
+}
+
+function getRemainingSeconds() {
+  var secondsLeft = (totalSeconds - secondsElapsed) % 60;
+
+  return ": "+((secondsLeft < 10) ? "0" : "") + secondsLeft;
+}
+
+/* This function ensures the timer is reset and readies the quiz timer by
+ * initializing totalSeconds
+ */
+function readyStartingTime() {
+  clearInterval(interval);
+  totalSeconds = (quizPeriodMinutes * 60) + quizPeriodSeconds;
+}
+
+// This function does 2 things. displays the time and checks to see if time is up.
+function renderTimeAndScore(runOffTime) {
+  // Run off extra time as needed
+  // when a missed guess penalty applies
+  secondsElapsed += runOffTime;
+  minDisplay.textContent = getRemainingMinutes();
+  secDisplay.textContent = getRemainingSeconds();
+  // Show current score as well
+  scoreDisplay.textContent = quizScore;
+
+  // and then checks to see if the time has run out
+  if (secondsElapsed >= totalSeconds) {
+    stopTimer();
+  }
+}
+
+// This function is where the "time" aspect of the timer runs
+// Notice no settings are changed other than to increment the secondsElapsed var
+function startTimer() {
+  quizQuestion = 0;
+  quizScore = 0;
+  showQuestion(quizQuestion);
+  readyStartingTime();
+
+  // Timer interval handles updating the time remaining
+  interval = setInterval(function() {
+    secondsElapsed++;
+    // So renderTimeAndScore() is called here once every second.
+    renderTimeAndScore(0);
+  }, 1000);
+}
+
+/* This function stops the interval and also resets secondsElapsed
+   and calls "setTime()" which effectively reset the timer
+   to the input selections workMinutesInput.value and restMinutesInput.value */
+function stopTimer() {
+  secondsElapsed = 0;
+  readyStartingTime();
+  renderTimeAndScore(0);
+}
+
+
+startButton.addEventListener("click", startTimer);
+choiceButtons.addEventListener("click", function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  if (event.target.matches("button")) {
+    answerQuestion(quizQuestion,event.target.dataset.letter);
+  }
+});

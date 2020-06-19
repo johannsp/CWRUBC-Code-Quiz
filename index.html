@@ -17,71 +17,108 @@
 
   <main class="container">
 
-    <div class="row">
-      <div class="col-sm-6">
-        <button type="button" class="btn bg-secondary" data-toggle="modal" data-target="#question">
-        Start Quiz
-        </button>
+    <!-- Card to ask multiple choice questions -->
+    <div id="question" class="card">
+
+      <div class="row">
+        <div class="col-sm-6">
+          <button type="button" id="#question" class="btn bg-secondary">
+          Start Quiz
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button type="button" class="btn bg-secondary" data-toggle="modal" data-target="#highScore">
+          High Scores
+          </button>
+        </div>
       </div>
-      <div class="col-sm-6">
-        <button type="button" class="btn bg-secondary" data-toggle="modal" data-target="#highScore">
-        High Scores
-        </button>
-      </div>
-    </div>
 
-    <!-- Modal window to ask multiple choice questions -->
-    <div id="question" class="modal">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+      <div class="card">
 
-          <div class="modal-header">
-            <h4 class="modal-title">
-            Javascript Timed Quiz
-            </h4>
+        <div class="card-header">
+          <h4 class="card-title">
+          Javascript Timed Quiz
+          </h4>
 
-            <div class="displayTimeLeft">
-              <div id="minutesLeft">7</div>
-              <div id="secondsLeft">00</div>
-            </div>
-
+          <div class="displayTimeLeft">
+            <span id="minutesLeft">05</span>
+            <span id="secondsLeft">: 00</span>
           </div>
 
-          <div class="modal-body">
-            <div id="textQuestion">
-            </div>
-
-            <div id="answer">
-            <input type="text" id="answerInput"> </input>
-            </div>
-
-            <div class="buttons">
-              <button aria-label="A" id="answerA">A</button>
-              <div id="textA">
-              </div>
-              <br>
-
-              <button aria-label="B" id="answerB">B</button>
-              <div id="textB">
-              </div>
-              <br>
-
-              <button aria-label="C" id="answerC">C</button>
-              <div id="textC">
-              </div>
-              <br>
-
-              <button aria-label="D" id="answerD">D</button>
-              <div id="textD">
-              </div>
-              <br>
-            </div>
-
+          <br>
+          <h5>
+          Score:
+          </h5>
+          <div id="curScore">
           </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn bg-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+        <div class="card-body">
+          <div id="textQuestion">
+          QUESTION
           </div>
+
+          <div id="answer">
+          <input type="text" id="answerInput"> </input>
+          </div>
+
+          <div class="buttons">
+            <div class="question row">
+              <div class="col-1 col-lg-1">
+                <button aria-label="A" data-letter="A">A</button>
+              </div>
+              <div class="col-11 col-lg-11">
+                <div id="textA">
+                Option A
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <div class="question row">
+              <div class="col-1 col-lg-1">
+                <button aria-label="B" data-letter="B">B</button>
+              </div>
+              <div class="col-11 col-lg-11">
+                <div id="textB">
+                Option B
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <div class="question row">
+              <div class="col-1 col-lg-1">
+                <button aria-label="C" data-letter="C">C</button>
+              </div>
+              <div class="col-11 col-lg-11">
+                <div id="textC">
+                Option C
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <div class="question row">
+              <div class="col-1 col-lg-1">
+                <button aria-label="D" data-letter="D">D</button>
+              </div>
+              <div class="col-11 col-lg-11">
+                <div id="textD">
+                Option D
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+
+        </div>
+
+        <div class="card-footer">
+          <!-- /**XXX** BEGIN Rem out {{{ **XXXXX**/
+                  <button type="button" class="btn bg-secondary" data-dismiss="modal">Close</button>
+          /*******XXX**  END  Rem out }}} **XXXXX**/ -->
         </div>
       </div>
     </div>
