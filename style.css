@@ -57,3 +57,7 @@ input {
   font-size: 2em;
 }
 
+.scroll {
+  max-height: 60vw;
+  overflow-y: scroll;
+}

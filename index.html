@@ -22,12 +22,12 @@
 
       <div class="row">
         <div class="col-sm-6">
-          <button type="button" id="#question" class="btn bg-secondary">
+          <button type="button" id="startButton" class="btn bg-secondary">
           Start Quiz
           </button>
         </div>
         <div class="col-sm-6">
-          <button type="button" class="btn bg-secondary" data-toggle="modal" data-target="#highScore">
+          <button type="button" id="highScoreButton" class="btn bg-secondary">
           High Scores
           </button>
         </div>
@@ -126,15 +126,12 @@
         </div>
 
         <div class="card-footer">
-          <!-- /**XXX** BEGIN Rem out {{{ **XXXXX**/
-                  <button type="button" class="btn bg-secondary" data-dismiss="modal">Close</button>
-          /*******XXX**  END  Rem out }}} **XXXXX**/ -->
         </div>
       </div>
     </div>
 
     <!-- Modal window to display high score list -->
-    <div id="highScore" class="modal">
+    <div id="highScoreModal" class="modal">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
@@ -145,12 +142,30 @@
           </div>
 
           <div class="modal-body">
-            <div id="scoreList">
+            <div id="canAddHighScore" class="collapse">
+              <form>
+              <input type="text" id="addNameForHighScore"></input>
+              </form>
+              <button type="button" id="addHighScore" class="btn bg-secondary">
+              Add Initials
+              </button>
+            </div>
+            <div class="row">
+              <h5 class="col-6 col-sd-6 winScore">Score</h5>
+              <h5 class="col-6 col-sd-6 winName">Initials</h5>
+            </div>
+            <div class="card scroll">
+              <div id="scoreList" class="card-body"></div>
             </div>
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn bg-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="clearHighScore" class="btn bg-secondary">
+            Clear High Scores
+            </button>
+            <button type="button" id="closeHighScore" class="btn bg-secondary">
+            Close
+            </button>
           </div>
         </div>
       </div>
